@@ -1,6 +1,85 @@
 
 $(function() {
+  // $.support.cors = true;
+  var workbook = new GC.Spread.Sheets.Workbook(document.getElementById("ss"));
+  var excelIO = new GC.Spread.Excel.IO();
+  var excelUrl = $("#importUrl").val();
+  function ImportFile() {
+    var excelUrl = "./test.xlsx";
 
+    var oReq = new XMLHttpRequest();
+    oReq.open('get', excelUrl, true);
+    oReq.responseType = 'blob';
+    oReq.onload = function () {
+        var blob = oReq.response;
+        excelIO.open(blob, LoadSpread, function (message) {
+            console.log(message);
+        });
+    };
+    oReq.send(null);
+}
+function LoadSpread(json) {
+    jsonData = json;
+    workbook.fromJSON(json);
+  console.log('jsonData', jsonData);
+  
+    workbook.setActiveSheet("Sheet1");
+    // ExportFile();
+}
+ImportFile();
+
+var ExportFile = function () {
+  var sheet = workbook.getActiveSheet();
+  console.log(sheet);
+  // sheet.addRows(11, 1);
+
+  var array = getketqua();
+  for (var i = 0; i < 310; i ++) {
+    console.log('column', i);
+    sheet.addColumns(i,1);
+  }
+  var maxRow = 17600;
+  
+  for (var i = 0; i < 10; i ++) {
+    console.log('row', i);
+    sheet.addRows(i,1);
+  }
+
+  for (var i = 0; i < 10; i++) {
+    if(!array[i]) {
+      break;
+    }
+    var a = array[i];
+
+    var len = a.length;
+    for (var j = 0; j < 10; j++) {
+      console.log(a[100000]);
+      if (!a[10000]) break;
+      var value = a[j];
+      console.log('setValue', value, j, i);
+      sheet.setValue(j, i, value);
+    }
+  }
+
+
+
+
+  
+  var fileName = 'export.xlsx';
+  if (fileName.substr(-5, 5) !== '.xlsx') {
+      fileName += '.xlsx';
+  }
+  var json = JSON.stringify(workbook.toJSON());
+
+  excelIO.save(json, function (blob) {
+      saveAs(blob, fileName);
+  }, function (e) {
+      if (e.errorCode === 1) {
+          alert(e.errorMessage);
+      }
+  });
+}
+window.ExportFile = ExportFile;
   function pad2(number) {
 
     return (number < 10 ? '0' : '') + number
@@ -56,7 +135,7 @@ $(function() {
       dataObj['date'] = date;
       dataObj['number'] = numArray;
       dataObj['str'] = a;
-      var mn =  mixNumber(a, date);
+      var mn =  mixFourNumber(a, date);
       // console.log(mn, indexInArray);
       dataO[indexInArray] = mn;
       // mixNumber(a);
@@ -67,7 +146,59 @@ $(function() {
     window.dataO = dataO;
     return dataO;
   }
+  function mixThreeNumber(a, date) {
+    var len = a.length;
+    var array = [];
+    var count = 0;
+    for (var i = 0; i < len; i++) {
+      for (var j = i + 1; j < len; j++) {
+        for (var k = j + 1; k < len; k++) {
+          array[0] = date;
+          count++;
+          array[count] = a[i] + '_' + a[j] + '_' + a[k];
+        }
+      }
+    }
+    return array;
+  }
+  function uniq_fast(a) {
+    var seen = {};
+    var out = [];
+    var len = a.length;
+    var j = 0;
+    for(var i = 0; i < len; i++) {
+         var item = a[i];
+         if(seen[item] !== 1) {
+               seen[item] = 1;
+               out[j++] = item;
+         }
+    }
+    return out;
+  }
 
+  function mixFourNumber(a, date) {
+
+    a = uniq_fast(a);
+    console.log(a);
+    var len = a.length;
+    var array = [];
+    var count = 0;
+    
+    for (var i = 0; i < len; i++) {
+      for (var j = i + 1; j < len; j++) {
+        for (var k = j + 1; k < len; k++) {
+          for (var l = k + 1; l < len; l++) {
+            window.gCount++;
+            array[0] = date;
+            count++;
+            array[count] = a[i] + '_' + a[j] + '_' + a[k] + '_' + a[l];
+          }
+        }
+      }
+    }
+    console.log('count', count++);
+    return array;
+  }
 
 
   function mixNumber(a, date) {
@@ -94,13 +225,14 @@ $(function() {
       data1 = response;
       console.log(data1);
 
-    getData2();
+    // getData2();
       
     }, function(response) {
       console.log(response);
     });
 
   }
+  window.gCount = 0;
 
   var sheetID = '1KnNhjBa3OTY2nFhuaL-hB94Zec6z7TwKQw8WP4KAGVk';
   function getData2() {
@@ -110,7 +242,7 @@ $(function() {
     }).then(function(response) {
       data2 = response;
       console.log(11111);
-      makeApiCall(data2);
+      // makeApiCall(data2);
       // calculateData();
     }, function(response) {
       console.log(response);
@@ -121,9 +253,11 @@ $(function() {
   function makeApiCall(data) {
     console.log(data);
     var values = getketqua().reverse();
+    return true;
+    
     console.log(5555, values);
     var length = values.length;
-    var range = 'test';
+    var range = 'Number4';
     var params = {
       // The ID of the spreadsheet to update.
       spreadsheetId: '1KnNhjBa3OTY2nFhuaL-hB94Zec6z7TwKQw8WP4KAGVk',  // TODO: Update placeholder value.
@@ -222,7 +356,7 @@ $(function() {
     if (isSignedIn) {
       authorizeButton.style.display = 'none';
       signoutButton.style.display = 'block';
-      listMajors();
+      // listMajors();
     } else {
       authorizeButton.style.display = 'block';
       signoutButton.style.display = 'none';
