@@ -33,28 +33,27 @@ var ExportFile = function () {
   console.log(sheet);
   // sheet.addRows(11, 1);
 
-  var array = getketqua();
-  for (var i = 0; i < 310; i ++) {
+  var array = getketqua().reverse();
+  for (var i = 0; i < array.length; i ++) {
     console.log('column', i);
     sheet.addColumns(i,1);
   }
   var maxRow = 17600;
   
-  for (var i = 0; i < 10; i ++) {
+  for (var i = 0; i < maxRow; i ++) {
     console.log('row', i);
     sheet.addRows(i,1);
   }
 
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < array.length; i++) {
     if(!array[i]) {
       break;
     }
     var a = array[i];
 
     var len = a.length;
-    for (var j = 0; j < 10; j++) {
-      console.log(a[100000]);
-      if (!a[10000]) break;
+    for (var j = 0; j < len; j++) {
+      if (!a[j]) break;
       var value = a[j];
       console.log('setValue', value, j, i);
       sheet.setValue(j, i, value);
@@ -84,14 +83,15 @@ window.ExportFile = ExportFile;
 
     return (number < 10 ? '0' : '') + number
   }
+  // var ele = $('#element');
   // var count = 0;
   // var total = 100;
-  // var is = 85;
-  // var ie = 100;
+  // var is = 0;
+  // var ie = 10;
   // for (i = is; i < ie; i++) {
   //   for (j = i+1; j < total; j++) {
   //     for (k = j+1; k < total; k++) {
-  //       ele.append('<p>' +  pad2(i) + '-' + pad2(j) + '-' +  pad2(k) +'</p>');
+  //       ele.append('<p>' +  pad2(i) +'_' + pad2(j) + '_' +  pad2(k) +'</p>');
   //       count++;
   //     }
   //   }
@@ -135,7 +135,7 @@ window.ExportFile = ExportFile;
       dataObj['date'] = date;
       dataObj['number'] = numArray;
       dataObj['str'] = a;
-      var mn =  mixFourNumber(a, date);
+      var mn =  mixThreeNumber(a, date);
       // console.log(mn, indexInArray);
       dataO[indexInArray] = mn;
       // mixNumber(a);
@@ -224,6 +224,7 @@ window.ExportFile = ExportFile;
     }).then(function(response) {
       data1 = response;
       console.log(data1);
+      makeApiCall(data2);
 
     // getData2();
       
@@ -242,7 +243,6 @@ window.ExportFile = ExportFile;
     }).then(function(response) {
       data2 = response;
       console.log(11111);
-      // makeApiCall(data2);
       // calculateData();
     }, function(response) {
       console.log(response);
@@ -251,16 +251,15 @@ window.ExportFile = ExportFile;
 
 
   function makeApiCall(data) {
-    console.log(data);
     var values = getketqua().reverse();
-    return true;
+    console.log(data);
     
     console.log(5555, values);
     var length = values.length;
-    var range = 'Number4';
+    var range = 'Hỗ trợ nhập';
     var params = {
       // The ID of the spreadsheet to update.
-      spreadsheetId: '1KnNhjBa3OTY2nFhuaL-hB94Zec6z7TwKQw8WP4KAGVk',  // TODO: Update placeholder value.
+      spreadsheetId: '1n2Jk9ZzGWlWcQr2liNwx7kXks9zwFnKabcUKvma0yDc',  // TODO: Update placeholder value.
 
       // The A1 notation of the values to update.
       range: range,
@@ -353,13 +352,14 @@ window.ExportFile = ExportFile;
    *  appropriately. After a sign-in, the API is called.
    */
   function updateSigninStatus(isSignedIn) {
+    makeApiCall();
+    
     if (isSignedIn) {
-      authorizeButton.style.display = 'none';
-      signoutButton.style.display = 'block';
-      // listMajors();
+      // authorizeButton.style.display = 'none';
+      // signoutButton.style.display = 'block';
     } else {
-      authorizeButton.style.display = 'block';
-      signoutButton.style.display = 'none';
+      // authorizeButton.style.display = 'block';
+      // signoutButton.style.display = 'none';
     }
   }
   
