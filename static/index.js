@@ -162,7 +162,7 @@ window.ExportFile = ExportFile;
       log  = dataObj;
       // console.log(log);
     });
-    console.log(dataO);
+    // console.log(dataO);
     window.dataO = dataO;
     window.tempStr = tempStr;
     
