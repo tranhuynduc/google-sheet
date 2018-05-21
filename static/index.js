@@ -97,12 +97,23 @@ window.ExportFile = ExportFile;
   //   }
   // }
   // console.log(count);
-
-  function getketqua() {
+  window.download = function download(content, fileName, contentType) {
+    contentType = contentType || 'text/plain';
+    var a = document.createElement("a");
+    
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName || 'data.txt';
+    a.click();
+}
+  window.getketqua = function getketqua() {
     var elements = $('.kqbackground.vien.tb-phoi');
     console.log(elements.length);
     var dataO = [];
-    
+    var dataDate = [];
+  // download('asdsad', 'json.txt', 'text/plain');
+  var tempStr = "";
+  
     $.each(elements, function (indexInArray, valueOfElement) { 
       // if (indexInArray > 5) {
       //   return false;
@@ -135,15 +146,26 @@ window.ExportFile = ExportFile;
       dataObj['date'] = date;
       dataObj['number'] = numArray;
       dataObj['str'] = a;
+      
       var mn =  mixThreeNumber(a, date);
+      tempStr += date
+      for (var ii = 0; ii < a.length; ii++) {
+        tempStr+= " "  + a[ii];
+      }
+
+      tempStr += "\n";
       // console.log(mn, indexInArray);
       dataO[indexInArray] = mn;
+      // dataDate[indexInArray] = str;
+      // console.log(tempStr);
       // mixNumber(a);
       log  = dataObj;
       // console.log(log);
     });
     console.log(dataO);
     window.dataO = dataO;
+    window.tempStr = tempStr;
+    
     return dataO;
   }
   function mixThreeNumber(a, date) {
