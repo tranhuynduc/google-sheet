@@ -147,6 +147,7 @@ window.ExportFile = ExportFile;
     return dataO;
   }
   function mixThreeNumber(a, date) {
+    a = uniq_fast(a);
     var len = a.length;
     var array = [];
     var count = 0;
@@ -219,7 +220,7 @@ window.ExportFile = ExportFile;
   var data1, data;
   function listMajors() {
     gapi.client.sheets.spreadsheets.values.get({
-      spreadsheetId: '1KnNhjBa3OTY2nFhuaL-hB94Zec6z7TwKQw8WP4KAGVk',
+      spreadsheetId: '1Ep0jiqIGYiJXmf3hDUiCOm9LYqDWaTPNhIhnBiIVCzA',
       range: 'Số Liệu!A:G',
     }).then(function(response) {
       data1 = response;
@@ -235,10 +236,10 @@ window.ExportFile = ExportFile;
   }
   window.gCount = 0;
 
-  var sheetID = '1KnNhjBa3OTY2nFhuaL-hB94Zec6z7TwKQw8WP4KAGVk';
+  var sheetID = '1Ep0jiqIGYiJXmf3hDUiCOm9LYqDWaTPNhIhnBiIVCzA';
   function getData2() {
     gapi.client.sheets.spreadsheets.values.get({
-      spreadsheetId: '1KnNhjBa3OTY2nFhuaL-hB94Zec6z7TwKQw8WP4KAGVk',
+      spreadsheetId: '1Ep0jiqIGYiJXmf3hDUiCOm9LYqDWaTPNhIhnBiIVCzA',
       range: 'Kết Quả!A1:D1',
     }).then(function(response) {
       data2 = response;
@@ -256,10 +257,10 @@ window.ExportFile = ExportFile;
     
     console.log(5555, values);
     var length = values.length;
-    var range = 'Hỗ trợ nhập';
+    var range = 'kq';
     var params = {
       // The ID of the spreadsheet to update.
-      spreadsheetId: '1n2Jk9ZzGWlWcQr2liNwx7kXks9zwFnKabcUKvma0yDc',  // TODO: Update placeholder value.
+      spreadsheetId: '1-Pwwbmrc6JPX4YwkZEMpP7hKUEAzYnNm2QIJc6qMIK0',  // TODO: Update placeholder value.
 
       // The A1 notation of the values to update.
       range: range,
