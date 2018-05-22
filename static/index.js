@@ -113,12 +113,12 @@ window.ExportFile = ExportFile;
     var dataDate = [];
   // download('asdsad', 'json.txt', 'text/plain');
   var tempStr = "";
-  
-    $.each(elements, function (indexInArray, valueOfElement) { 
+    for (var i = elements.length - 1; i > -1; i--) {
+    // $.each(elements, function (indexInArray, valueOfElement) { 
       // if (indexInArray > 5) {
       //   return false;
       // }
-      var self = $(this);
+      var self = $(elements[i]);
       var text = self.find('#result_date').text();
       var mb = self.find('#dau_mb');
       var tr = mb.find('tbody tr');
@@ -150,18 +150,18 @@ window.ExportFile = ExportFile;
       var mn =  mixThreeNumber(a, date);
       tempStr += date
       for (var ii = 0; ii < a.length; ii++) {
-        tempStr+= " "  + a[ii];
+        tempStr+= "\t"  + a[ii];
       }
 
       tempStr += "\n";
       // console.log(mn, indexInArray);
-      dataO[indexInArray] = mn;
+      // dataO[indexInArray] = mn;
       // dataDate[indexInArray] = str;
       // console.log(tempStr);
       // mixNumber(a);
       log  = dataObj;
       // console.log(log);
-    });
+    };
     // console.log(dataO);
     window.dataO = dataO;
     window.tempStr = tempStr;
